@@ -4,6 +4,9 @@
  */
 package com.mycompany.telas;
 
+import com.mycompany.outros.Formularios;
+import javax.swing.JFrame;
+
 /**
  *
  * @author victor.7455
@@ -41,7 +44,7 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
         txtCadAdvOAB = new javax.swing.JTextField();
         btnCadAdvVoltar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         txtCadAdvUF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
@@ -86,6 +89,11 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
 
         btnCadAdvVoltar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCadAdvVoltar.setText("VOLTAR");
+        btnCadAdvVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadAdvVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,11 +124,11 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
                             .addComponent(txtCadAdvNome, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4)
-                    .addComponent(txtCadAdvSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCadAdvSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                     .addComponent(jLabel6)
-                    .addComponent(txtCadAdvUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCadAdvUF))
                 .addGap(175, 175, 175))
         );
         jPanel1Layout.setVerticalGroup(
@@ -180,6 +188,14 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
     private void txtCadAdvOABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCadAdvOABActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCadAdvOABActionPerformed
+
+    private void btnCadAdvVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadAdvVoltarActionPerformed
+        if (Formularios.Menu == null)
+            Formularios.Menu = new Menu();
+        
+        Formularios.Menu.setVisible(true);
+        Formularios.Menu.setExtendedState(JFrame.NORMAL);
+    }//GEN-LAST:event_btnCadAdvVoltarActionPerformed
 
     /**
      * @param args the command line arguments

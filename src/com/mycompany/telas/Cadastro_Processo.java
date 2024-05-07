@@ -4,6 +4,9 @@
  */
 package com.mycompany.telas;
 
+import com.mycompany.outros.Formularios;
+import javax.swing.JFrame;
+
 /**
  *
  * @author victor.7455
@@ -46,7 +49,7 @@ public class Cadastro_Processo extends javax.swing.JFrame {
         btnCadProc = new javax.swing.JButton();
         btnCadReturn = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("CADASTRO DE PROCESSO");
@@ -206,7 +209,11 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadReturnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadReturnActionPerformed
-        // TODO add your handling code here:
+        if (Formularios.Menu == null)
+            Formularios.Menu = new Menu();
+        
+        Formularios.Menu.setVisible(true);
+        Formularios.Menu.setExtendedState(JFrame.NORMAL); 
     }//GEN-LAST:event_btnCadReturnActionPerformed
 
     private void txtCadVaraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCadVaraActionPerformed

@@ -33,7 +33,7 @@ public class ListEndereço extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblListEnd = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cmbListEnd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "Rua", "Nº", "Bairro", "Cidade", "UF", "CEP" }));
         cmbListEnd.addActionListener(new java.awt.event.ActionListener() {

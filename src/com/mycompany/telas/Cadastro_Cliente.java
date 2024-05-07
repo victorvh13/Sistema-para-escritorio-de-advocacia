@@ -4,6 +4,9 @@
  */
 package com.mycompany.telas;
 
+import com.mycompany.outros.Formularios;
+import javax.swing.JFrame;
+
 /**
  *
  * @author victor.7455
@@ -51,7 +54,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         txtCadCliTel = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Telefone");
@@ -98,6 +101,11 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
 
         btnCadCliVoltar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnCadCliVoltar.setText("VOLTAR");
+        btnCadCliVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadCliVoltarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("Cidade");
@@ -230,6 +238,14 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCadCliVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadCliVoltarActionPerformed
+        if (Formularios.Menu == null)
+            Formularios.Menu = new Menu();
+        
+        Formularios.Menu.setVisible(true);
+        Formularios.Menu.setExtendedState(JFrame.NORMAL); 
+    }//GEN-LAST:event_btnCadCliVoltarActionPerformed
 
     /**
      * @param args the command line arguments

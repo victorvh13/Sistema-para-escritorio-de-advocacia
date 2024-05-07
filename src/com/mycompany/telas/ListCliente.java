@@ -33,7 +33,7 @@ public class ListCliente extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblListCliente = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cmbListCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "NOME", "CPF", "TEL", "EMAIL", "ENDEREÇO" }));
         cmbListCliente.addActionListener(new java.awt.event.ActionListener() {

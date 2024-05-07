@@ -33,7 +33,7 @@ public class ListDadosProcesso extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblListDProc = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         cmbListDProc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "Número do processo", "Vara", "Comarca", "Data", "Status", "Réu" }));
         cmbListDProc.addActionListener(new java.awt.event.ActionListener() {
