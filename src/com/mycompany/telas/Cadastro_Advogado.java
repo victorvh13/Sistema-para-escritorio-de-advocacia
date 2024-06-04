@@ -4,8 +4,13 @@
  */
 package com.mycompany.telas;
 
+import com.mycompany.dao.DaoAdvogados;
+import com.mycompany.outros.Constantes;
+import com.mycompany.outros.DadosTemporarios;
 import com.mycompany.outros.Formularios;
+import com.mycompany.modelo.ModAdvogados;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,8 +22,103 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
      * Creates new form Cadastro_Advogado2
      */
     public Cadastro_Advogado() {
-        initComponents();
+     
+       initComponents();
+        
+        if(!existeDadosTemporarios()){
+            DaoAdvogados daoAdvogados = new DaoAdvogados();
+
+            int id = daoAdvogados.buscarProximoId(); 
+            if (id >= 0)
+                txtId.setText(String.valueOf(id));
+            
+            btnCadAdvCad.setText(Constantes.BTN_SALVAR_TEXT);
+            btnExcluir.setVisible(false);
+        }else{
+            btnCadAdvCad.setText(Constantes.BTN_ALTERAR_TEXT);
+            btnExcluir.setVisible(true);
+        }
+        
+        setLocationRelativeTo(null);
+        
+        txtId.setEnabled(false); 
+ 
+
     }
+    
+    private Boolean existeDadosTemporarios(){        
+        if(DadosTemporarios.tempObject instanceof ModAdvogados){
+            int id = ((ModAdvogados) DadosTemporarios.tempObject).getId();
+            String nomeadv = ((ModAdvogados) DadosTemporarios.tempObject).getNome();
+            String oab = ((ModAdvogados) DadosTemporarios.tempObject).getOab();
+            String uf = ((ModAdvogados) DadosTemporarios.tempObject).getUf();
+            
+            
+            txtId.setText(String.valueOf(id));
+            txtCadAdvNome.setText(nomeadv);
+            txtCadAdvOAB.setText(oab);
+            txtCadAdvUF.setText(uf);
+            
+            DadosTemporarios.tempObject = null;
+            
+            return true;
+        }else
+            return false;
+    }
+    
+    private void inserir(){
+        DaoAdvogados daoAdvogados = new DaoAdvogados();
+        
+        if (daoAdvogados.inserir(Integer.parseInt(txtId.getText()), txtCadAdvNome.getText(), txtCadAdvOAB.getText(), txtCadAdvUF.getText())){
+            JOptionPane.showMessageDialog(null, "Advogado salvo com sucesso!");
+            
+            txtId.setText(String.valueOf(daoAdvogados.buscarProximoId()));
+            txtCadAdvNome.setText("");
+            txtCadAdvOAB.setText("");
+            txtCadAdvUF.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Não foi possível salvar o advogado!");
+        }
+        
+    }
+    
+    private void alterar(){
+        DaoAdvogados daoAdvogados = new DaoAdvogados();
+        
+        if (daoAdvogados.alterar(Integer.parseInt(txtId.getText()), txtCadAdvNome.getText(), txtCadAdvOAB.getText(), txtCadAdvUF.getText())){
+            JOptionPane.showMessageDialog(null, "Cadastro do Advogado Alterados!");
+            
+            txtCadAdvNome.setText("");
+            txtCadAdvOAB.setText("");
+            txtCadAdvUF.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Não foi possível alterar o Cadastro");
+        }
+        
+//        ((ListAdvogado) Formularios).listarTodos();
+        ((ListAdvogado) Formularios.ListAdvogado).listarTodos();
+        
+        dispose();
+    }
+    
+    private void excluir(){
+        DaoAdvogados daoAdvogados = new DaoAdvogados();
+        
+        if (daoAdvogados.excluir(Integer.parseInt(txtId.getText()))){
+            JOptionPane.showMessageDialog(null, "Cadastro de Advogado " + txtCadAdvNome.getText() + " excluído com sucesso!");
+            
+            txtCadAdvNome.setText("");
+            txtCadAdvOAB.setText("");
+            txtCadAdvUF.setText("");
+        }else{
+            JOptionPane.showMessageDialog(null, "Não foi possível excluir o cadastro do advogado!");
+        }
+        
+//        ((ListAdvogado) Formularios.).listarTodos();
+        
+        dispose();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -32,17 +132,16 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         txtCadAdvUF = new javax.swing.JTextField();
         btnCadAdvCad = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtCadAdvUser = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txtCadAdvSenha = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCadAdvNome = new javax.swing.JTextField();
         txtCadAdvOAB = new javax.swing.JTextField();
         btnCadAdvVoltar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -56,18 +155,8 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel5.setText("Usuário");
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Senha");
-
-        txtCadAdvUser.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("CADASTRO DE ADVOGADO");
-
-        txtCadAdvSenha.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Nome");
@@ -79,6 +168,11 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
         jLabel4.setText("UF");
 
         txtCadAdvNome.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCadAdvNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCadAdvNomeActionPerformed(evt);
+            }
+        });
 
         txtCadAdvOAB.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtCadAdvOAB.addActionListener(new java.awt.event.ActionListener() {
@@ -95,40 +189,53 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
             }
         });
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel7.setText("Id");
+
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
+        btnExcluir.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnExcluir.setText("EXCLUIR");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(354, 354, 354)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnCadAdvCad)
-                        .addGap(74, 74, 74)))
+                .addGap(99, 99, 99)
+                .addComponent(btnExcluir)
+                .addGap(180, 180, 180)
+                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCadAdvVoltar)
                 .addGap(32, 32, 32))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCadAdvUser, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCadAdvOAB, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3)
                             .addComponent(txtCadAdvNome, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2))))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel7)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnCadAdvCad)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(txtCadAdvSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                    .addComponent(jLabel6)
-                    .addComponent(txtCadAdvUF))
+                    .addComponent(txtCadAdvUF, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(175, 175, 175))
         );
         jPanel1Layout.setVerticalGroup(
@@ -136,35 +243,32 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jLabel1)
-                .addGap(57, 57, 57)
+                .addGap(46, 46, 46)
+                .addComponent(jLabel7)
+                .addGap(18, 18, 18)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(txtCadAdvNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(64, 64, 64)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCadAdvUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCadAdvOAB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(277, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCadAdvCad)
-                            .addComponent(btnCadAdvVoltar))
-                        .addGap(65, 65, 65))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCadAdvOAB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCadAdvUF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(93, 93, 93)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtCadAdvUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCadAdvSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 231, Short.MAX_VALUE))))
+                            .addComponent(btnCadAdvVoltar)
+                            .addComponent(btnExcluir))
+                        .addGap(65, 65, 65))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -181,21 +285,47 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCadAdvCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadAdvCadActionPerformed
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCadAdvCadActionPerformed
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    private void btnCadAdvVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadAdvVoltarActionPerformed
+        if (Formularios.Menu == null)
+        Formularios.Menu = new Menu();
+
+        Formularios.Menu.setVisible(true);
+        Formularios.Menu.setExtendedState(JFrame.NORMAL);
+    }//GEN-LAST:event_btnCadAdvVoltarActionPerformed
 
     private void txtCadAdvOABActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCadAdvOABActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCadAdvOABActionPerformed
 
-    private void btnCadAdvVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadAdvVoltarActionPerformed
-        if (Formularios.Menu == null)
-            Formularios.Menu = new Menu();
+    private void txtCadAdvNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCadAdvNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCadAdvNomeActionPerformed
+
+    private void btnCadAdvCadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadAdvCadActionPerformed
+        DaoAdvogados daoAdvogados = new DaoAdvogados();
+
+        if (btnCadAdvCad.getText() == Constantes.BTN_SALVAR_TEXT){
+            inserir();
+
+        }else if (btnCadAdvCad.getText() == Constantes.BTN_ALTERAR_TEXT){
+            alterar();
+            dispose();
+        }      // TODO add your handling code here:
+    }//GEN-LAST:event_btnCadAdvCadActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int escolha = 
+                JOptionPane.showConfirmDialog(
+                        null, 
+                        "Deseja realmente excluir o endereço?");
         
-        Formularios.Menu.setVisible(true);
-        Formularios.Menu.setExtendedState(JFrame.NORMAL);
-    }//GEN-LAST:event_btnCadAdvVoltarActionPerformed
+        if(escolha == JOptionPane.YES_OPTION)
+            excluir();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -236,17 +366,16 @@ public class Cadastro_Advogado extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadAdvCad;
     private javax.swing.JButton btnCadAdvVoltar;
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCadAdvNome;
     private javax.swing.JTextField txtCadAdvOAB;
-    private javax.swing.JTextField txtCadAdvSenha;
     private javax.swing.JTextField txtCadAdvUF;
-    private javax.swing.JTextField txtCadAdvUser;
+    private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@
  */
 package com.mycompany.telas;
 
+import com.mycompany.outros.BancoDeDadosMySql;
 import javax.swing.JFrame;
 import com.mycompany.outros.Formularios;
 /**
@@ -17,6 +18,8 @@ public class Menu extends javax.swing.JFrame {
      */
     public Menu() {
         initComponents();
+        
+        BancoDeDadosMySql.conectar();
     }
 
     /**

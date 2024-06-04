@@ -62,6 +62,11 @@ public class ListProcesso extends javax.swing.JFrame {
             }
         ));
         tblProc.setColumnSelectionAllowed(true);
+        tblProc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProcMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProc);
         tblProc.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         if (tblProc.getColumnModel().getColumnCount() > 0) {
@@ -121,6 +126,10 @@ public class ListProcesso extends javax.swing.JFrame {
     private void txtFiltrarProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFiltrarProcActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFiltrarProcActionPerformed
+
+    private void tblProcMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProcMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblProcMouseClicked
 
     /**
      * @param args the command line arguments

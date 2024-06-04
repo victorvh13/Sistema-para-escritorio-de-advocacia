@@ -4,15 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/ListCliente.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/ListDadosProcesso.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/Cadastro_Advogado.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/ListProcesso.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/Login.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/outros/Formularios.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/Cadastro_Processo.java</file>
+            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/ListAdvogado.java</file>
+            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/dao/DaoCliente.java</file>
             <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/ListEndereço.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/Cadastro_Cliente.java</file>
-            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/telas/Menu.java</file>
+            <file>file:/C:/Users/victor.7455/Documents/Projetos/Sistema%20para%20escritório%20de%20advocacia/src/com/mycompany/modelo/ModEndereco.java</file>
         </group>
     </open-files>
 </project-private>

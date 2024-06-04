@@ -14,6 +14,7 @@ public class Formularios {
     public static JFrame Cadastro_Advogado;
     public static JFrame Cadastro_Cliente;
     public static JFrame Cadastro_Processo;
+    public static JFrame ListAdvogado;
     public static JFrame ListCliente;
     public static JFrame ListDadosProcesso;
     public static JFrame ListEndereço;
