@@ -21,6 +21,10 @@ public class ModAdvogados {
         this.uf = uf;
     }
 
+    public ModAdvogados(String nome) {
+        this.nome = nome;
+    }
+    
     public ModAdvogados() {
     }
 

@@ -10,14 +10,14 @@ package com.mycompany.modelo;
  */
 public class ModEndereco {
     private int id;
-    private String cep;
+    private int cep;
     private String estado;
     private String cidade;
     private String bairro;
     private String rua;
     private String numero;
 
-    public ModEndereco(int id, String cep, String estado, String cidade, String bairro, String rua, String numero) {
+    public ModEndereco(int id, int cep, String estado, String cidade, String bairro, String rua, String numero) {
         this.id = id;
         this.cep = cep;
         this.estado = estado;
@@ -34,7 +34,7 @@ public class ModEndereco {
         return id;
     }
 
-    public String getCep() {
+    public int getCep() {
         return cep;
     }
 
@@ -62,7 +62,7 @@ public class ModEndereco {
         this.id = id;
     }
 
-    public void setCep(String cep) {
+    public void setCep(int cep) {
         this.cep = cep;
     }
 
@@ -90,6 +90,8 @@ public class ModEndereco {
     public String toString() {
         return "ModEndereco{" + "id=" + id + ", cep=" + cep + ", estado=" + estado + ", cidade=" + cidade + ", bairro=" + bairro + ", rua=" + rua + ", numero=" + numero + '}';
     }
+
+
     
     
     

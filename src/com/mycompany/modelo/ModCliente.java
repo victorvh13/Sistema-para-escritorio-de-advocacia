@@ -25,6 +25,10 @@ public class ModCliente {
         this.idEndereco = idEndereco;
     }
 
+    public ModCliente(String nome) {
+        this.nome = nome;
+    }
+
     public ModCliente() {
     }
 

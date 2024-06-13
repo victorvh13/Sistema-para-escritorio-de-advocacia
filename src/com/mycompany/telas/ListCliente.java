@@ -4,9 +4,11 @@
  */
 package com.mycompany.telas;
 import com.mycompany.dao.DaoCliente;
+import com.mycompany.dao.DaoEndereco;
 import com.mycompany.outros.DadosTemporarios;
 import com.mycompany.outros.Formularios;
 import com.mycompany.modelo.ModCliente;
+import com.mycompany.modelo.ModEndereco;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -61,6 +63,8 @@ public class ListCliente extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
+        
+        
     
         public void listarPorNome(){
         try{
@@ -210,6 +214,11 @@ public class ListCliente extends javax.swing.JFrame {
         });
 
         btnListCliente.setText("FILTRAR");
+        btnListCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListClienteActionPerformed(evt);
+            }
+        });
 
         tblListCliente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -218,7 +227,15 @@ public class ListCliente extends javax.swing.JFrame {
             new String [] {
                 "ID", "Nome", "CPF", "Tel", "Email"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblListCliente.setColumnSelectionAllowed(true);
         tblListCliente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -433,50 +450,113 @@ public class ListCliente extends javax.swing.JFrame {
 
     private void tblListClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListClienteMouseClicked
         
-    if(evt.getButton() == MouseEvent.BUTTON3){
-        JPopupMenu popupMenu = new JPopupMenu();
-    
-        // Adicione itens ao menu popup
-        JMenuItem menuItem1 = new JMenuItem("Dados do endereço");
+        if((evt.getButton() == MouseEvent.BUTTON1) && (evt.getClickCount() == 2)){
+            int linhaClicada = tblListCliente.rowAtPoint(evt.getPoint());
+            
+            int idCliente = Integer.parseInt(String.valueOf(tblListCliente.getValueAt(linhaClicada, 0)));
+            
+            //Obtendo dados do cliente
+            ModCliente modCliente = new ModCliente();
+            
+            DaoCliente daoCliente = new DaoCliente();
+            
 
-        // Adicione ação aos itens do menu popup
-        menuItem1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                int linhaClicada = tblListCliente.rowAtPoint(evt.getPoint());
-                int id = Integer.parseInt(String.valueOf(tblListCliente.getValueAt(linhaClicada, 0)));
-
-                // Realize a consulta ao banco de dados para obter os dados do endereço
-                try {
-                    DaoCliente daoCliente = new DaoCliente();
-                    ResultSet rs = daoCliente.listarPorId(id);
-                    if (rs.next()) {
-                        cep.setText(rs.getString("CEP"));
-                        estado.setText(rs.getString("Estado"));
-                        cidade.setText(rs.getString("Cidade"));
-                        bairro.setText(rs.getString("Bairro"));
-                        rua.setText(rs.getString("Rua"));
-                        numero.setText(rs.getString("Numero"));
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
+            
+            ResultSet resultSetCliente = daoCliente.listarPorId(idCliente);
+            
+            int idEndereco = -1;
+            try{
+                if(resultSetCliente.next()){
+                    modCliente.setId(resultSetCliente.getInt("ID"));
+                    modCliente.setCpf(resultSetCliente.getString("CPF"));
+                    modCliente.setEmail(resultSetCliente.getString("EMAIL"));
+                    modCliente.setIdEndereco(resultSetCliente.getInt("ID_ENDERECO"));
+                    modCliente.setNome(resultSetCliente.getString("NOME"));
+                    modCliente.setTelefone(resultSetCliente.getString("TELEFONE"));
+                    
+                    idEndereco = resultSetCliente.getInt("id_endereco");
                 }
-
-                jPanelEnderecoCliente.setVisible(true);
+            }catch(SQLException e){
+                e.printStackTrace();
+            } 
+            
+            DadosTemporarios.tempObject = modCliente;
+           
+           
+         
+            ModEndereco modEndereco = new ModEndereco();
+            
+            DaoEndereco daoEndereco = new DaoEndereco();
+            
+            ResultSet resultSetendereco = daoEndereco.listarPorId(idEndereco);
+            
+            try{
+                if(resultSetendereco.next()){
+                    modEndereco.setId(resultSetendereco.getInt("ID"));
+                    modEndereco.setCep(resultSetendereco.getInt("CEP"));
+                    modEndereco.setCidade(resultSetendereco.getString("CIDADE"));
+                    modEndereco.setEstado(resultSetendereco.getString("ESTADO"));
+                    modEndereco.setNumero(resultSetendereco.getString("NUMERO"));
+                    modEndereco.setRua(resultSetendereco.getString("RUA"));
+                    modEndereco.setBairro(resultSetendereco.getString("BAIRRO"));
+                }
+            }catch(SQLException e){
+                e.printStackTrace();
             }
-        });
+            
+            DadosTemporarios.tempObject2 = modEndereco;
+            
+             Formularios.Cadastro_Cliente = new Cadastro_Cliente();
+            Formularios.Cadastro_Cliente.setVisible(true);
+            
+            //
+        }else if(evt.getButton() == MouseEvent.BUTTON3){
+            JPopupMenu popupMenu = new JPopupMenu();
 
-        // Adicione os itens ao menu popup
-        popupMenu.add(menuItem1);
+      
+            JMenuItem menuItem1 = new JMenuItem("Dados do endereço");
 
-        // Exiba o menu popup na posição do mouse
-        popupMenu.show(tblListCliente, evt.getX(), evt.getY());
-    
-}
+         
+            menuItem1.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int linhaClicada = tblListCliente.rowAtPoint(evt.getPoint());
+                    int id = Integer.parseInt(String.valueOf(tblListCliente.getValueAt(linhaClicada, 0)));
+
+                   
+                    try {
+                        DaoCliente daoCliente = new DaoCliente();
+                        ResultSet rs = daoCliente.listarPorId(id);
+                        if (rs.next()) {
+                            cep.setText(rs.getString("CEP"));
+                            estado.setText(rs.getString("Estado"));
+                            cidade.setText(rs.getString("Cidade"));
+                            bairro.setText(rs.getString("Bairro"));
+                            rua.setText(rs.getString("Rua"));
+                            numero.setText(rs.getString("Numero"));
+                        }
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
+                    }
+
+                    jPanelEnderecoCliente.setVisible(true);
+                }
+            });
+
+  
+            popupMenu.add(menuItem1);
+
+          
+            popupMenu.show(tblListCliente, evt.getX(), evt.getY());
+        }
     }//GEN-LAST:event_tblListClienteMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         jPanelEnderecoCliente.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnListClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnListClienteActionPerformed
 
     /**
      * @param args the command line arguments

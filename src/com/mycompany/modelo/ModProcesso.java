@@ -15,11 +15,11 @@ public class ModProcesso {
     private String numeroDoProcesso;
     private String vara;
     private String comarca;
-    private int dataProtocolo;
+    private String dataProtocolo;
     private String status;
     private String reu;
 
-    public ModProcesso(int id, int idCliente, int idAdvogados, String numeroDoProcesso, String vara, String comarca, int dataProtocolo, String status, String reu) {
+    public ModProcesso(int id, int idCliente, int idAdvogados, String numeroDoProcesso, String vara, String comarca, String dataProtocolo, String status, String reu) {
         this.id = id;
         this.idCliente = idCliente;
         this.idAdvogados = idAdvogados;
@@ -58,7 +58,7 @@ public class ModProcesso {
         return comarca;
     }
 
-    public int getDataProtocolo() {
+    public String getDataProtocolo() {
         return dataProtocolo;
     }
 
@@ -94,7 +94,7 @@ public class ModProcesso {
         this.comarca = comarca;
     }
 
-    public void setDataProtocolo(int dataProtocolo) {
+    public void setDataProtocolo(String dataProtocolo) {
         this.dataProtocolo = dataProtocolo;
     }
 

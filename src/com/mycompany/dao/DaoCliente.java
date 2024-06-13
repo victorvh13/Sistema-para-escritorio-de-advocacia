@@ -99,6 +99,12 @@ public class DaoCliente {
      public ResultSet listarPorId(int id){
         try{
             sql = "select \n" +
+                    "	c.id as ID,\n" +
+                    "	c.Nome as NOME,\n" +
+                    "	c.CPF as CPF,\n" +
+                    "	c.Telefone as TELEFONE,\n" +
+                    "	c.Email as EMAIL,\n" +
+                    "	c.id_endereco as ID_ENDERECO,\n" +
                     "	e.CEP as CEP,\n" +
                     "	e.Estado as ESTADO,\n" +
                     "	e.Cidade as CIDADE,\n" +

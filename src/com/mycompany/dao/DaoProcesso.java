@@ -22,7 +22,7 @@ public class DaoProcesso {
     public Boolean inserir(int id, int idCliente, int idAdvogados, String NumeroDoProcesso, String Vara, String Comarca, String DataProtocolo, String Status, String Reu){
         try{
             
-            sql = "INSERT INTO CLIENTE (ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            sql = "INSERT INTO PROCESSO (ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -47,7 +47,7 @@ public class DaoProcesso {
     
     public Boolean alterar(int id, int idCliente, int idAdvogados, String NumeroDoProcesso, String Vara, String Comarca, String DataProtocolo, String Status, String Reu){
         try{
-            sql = "UPDATE CLIENTE SET ID = ?, ID_CLIENTE = ?, ID_ADVOGADOS = ?, NUMERO_DO_PROCESSO = ?, VARA = ?, COMARCA = ?, DATA_PROTOCOLO = ?, STATUS = ?, REU = ? WHERE ID = ?";
+            sql = "UPDATE PROCESSO SET ID = ?, ID_CLIENTE = ?, ID_ADVOGADOS = ?, NUMERO_DO_PROCESSO = ?, VARA = ?, COMARCA = ?, DATA_PROTOCOLO = ?, STATUS = ?, REU = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
@@ -89,7 +89,7 @@ public class DaoProcesso {
     
     public ResultSet listarTodos(){
             try {
-                sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU from";
+                sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO";
                 
             setStatement(getConexao().prepareStatement(sql));
                 
@@ -113,7 +113,10 @@ public class DaoProcesso {
                     "	p.Comarca,\n" +
                     "	p.Data_Protocolo,\n" +
                     "	p.Status,\n" +
-                    "	p.Reu \n" +
+                    "	p.Reu, \n" +
+                    "	c.id, \n" +
+                    "	p.id_cliente, \n" +
+                    "	p.id_advogados \n" +
                     "from\n" +
                     "	processo p \n" +
                     "join cliente c\n" +
@@ -137,7 +140,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorIdCliente(int idCliente){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE ID_CLIENTE = ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE ID_CLIENTE = ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -153,7 +156,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorIdAdvogados(int idAdvogados){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE ID_ADVOGADOS = ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE ID_ADVOGADOS = ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -169,7 +172,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorNumeroDoProcesso(String NumeroDoProcesso){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE NUMERO_DO_PROCESSO LIKE ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE NUMERO_DO_PROCESSO LIKE ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -185,7 +188,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorVara(String Vara){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE VARA LIKE ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE VARA LIKE ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -201,7 +204,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorComarca(String Comarca){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE COMARCA LIKE ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE COMARCA LIKE ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -217,7 +220,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorDataProtocolo(int DataProtocolo){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE DATA_PROTOCOLO = ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE DATA_PROTOCOLO = ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -233,7 +236,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorStatus(String Status){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE STATUS LIKE ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE STATUS LIKE ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
@@ -249,7 +252,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorReu(String Reu){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU WHERE ID_ADVOGADOS LIKE ?";
+             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE ID_ADVOGADOS LIKE ?";
 
              setStatement(getConexao().prepareStatement(sql));
 

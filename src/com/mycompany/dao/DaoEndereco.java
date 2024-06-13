@@ -99,7 +99,7 @@ public class DaoEndereco extends BancoDeDadosMySql {
 
         public ResultSet listarPorId(int id){
         try{
-            sql = "SELECT ID, CEP, ESTADO, CIDADE, BAIRRO, RUA, NUMERO WHERE ID = ?";
+            sql = "SELECT ID, CEP, ESTADO, CIDADE, BAIRRO, RUA, NUMERO FROM ENDERECO WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
