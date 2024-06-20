@@ -14,6 +14,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -64,9 +68,34 @@ public class ListCliente extends javax.swing.JFrame {
         }
     }
         
-        
+    public void listarPorId(int pId){
+        try{
+            //Define o model da tabela.
+            DefaultTableModel defaultTableModel = (DefaultTableModel) tblListCliente.getModel();
+
+            tblListCliente.setModel(defaultTableModel);
+
+            DaoCliente daoCliente = new DaoCliente();
+
+            //Atribui o resultset retornado a uma variável para ser usada.
+            ResultSet resultSet = daoCliente.listarPorId(pId);
+            
+            defaultTableModel.setRowCount(0);
+            while (resultSet.next()){
+                String id = resultSet.getString(1);
+                String nome = resultSet.getString(2);
+                String cpf = resultSet.getString(3);
+                String tel = resultSet.getString(4);
+                String email = resultSet.getString(5);
+  
+                defaultTableModel.addRow(new Object[]{id, nome, cpf, tel, email});
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    } 
     
-        public void listarPorNome(){
+        public void listarPorNome(String pNome){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblListCliente.getModel();
             
@@ -91,7 +120,7 @@ public class ListCliente extends javax.swing.JFrame {
         }
     }
     
-        public void listarPorCPF(){
+        public void listarPorCPF(String pCPF){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblListCliente.getModel();
             
@@ -116,7 +145,7 @@ public class ListCliente extends javax.swing.JFrame {
         }
     }
         
-        public void listarPorTelefone(){
+        public void listarPorTelefone(String pTelefone){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblListCliente.getModel();
             
@@ -141,7 +170,7 @@ public class ListCliente extends javax.swing.JFrame {
         }
     }
         
-        public void listarPorEmail(){
+        public void listarPorEmail(String pEmail){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblListCliente.getModel();
             
@@ -200,7 +229,7 @@ public class ListCliente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        cmbListCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "NOME", "CPF", "TEL", "EMAIL", "ENDEREÇO" }));
+        cmbListCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "ID", "NOME", "CPF", "TEL", "EMAIL" }));
         cmbListCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbListClienteActionPerformed(evt);
@@ -555,7 +584,27 @@ public class ListCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnListClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListClienteActionPerformed
-        // TODO add your handling code here:
+        switch (cmbListCliente.getSelectedIndex()){
+            case 0:
+                listarTodos();
+                break;
+            case 1:
+                listarPorId(Integer.parseInt(txtListCliente.getText()));
+                break;
+            case 2:
+                listarPorNome(txtListCliente.getText());
+                break;
+            case 3:
+                listarPorCPF(txtListCliente.getText());
+                break;
+            case 4:
+                listarPorTelefone(txtListCliente.getText());
+                break;
+            case 5:
+                listarPorEmail(txtListCliente.getText());
+                break;
+        
+    }          
     }//GEN-LAST:event_btnListClienteActionPerformed
 
     /**

@@ -65,8 +65,34 @@ public class ListProcesso extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
     }
+    public void listarPorId(int pId){
+        try{
+         
+            DefaultTableModel defaultTableModel = (DefaultTableModel) tblProc.getModel();
+
+            tblProc.setModel(defaultTableModel);
+
+            DaoCliente daoCliente = new DaoCliente();
+
+    
+            ResultSet resultSet = daoCliente.listarPorId(pId);
+            
+            defaultTableModel.setRowCount(0);
+            while (resultSet.next()){
+                String id = resultSet.getString(1);
+                String cliente = resultSet.getString(2);
+                String advogado = resultSet.getString(3);
+                String numero_processo = resultSet.getString(4);
+    
+  
+                defaultTableModel.addRow(new Object[]{id, cliente, advogado, numero_processo});
+            }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+    } 
         
-        public void listarPorCliente(){
+        public void listarPorCliente(String pCliente){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblProc.getModel();
             
@@ -91,7 +117,7 @@ public class ListProcesso extends javax.swing.JFrame {
         }
     }
         
-        public void listarPorAdv(){
+        public void listarPorAdv(String pAdv){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblProc.getModel();
             
@@ -117,7 +143,7 @@ public class ListProcesso extends javax.swing.JFrame {
         }
     }
         
-        public void listarPorNumeroDoProcesso(){
+        public void listarPorNumeroDoProcesso(String pNProcesso){
         try{
             DefaultTableModel defaultTableModel = (DefaultTableModel) tblProc.getModel();
             
@@ -186,6 +212,11 @@ public class ListProcesso extends javax.swing.JFrame {
         });
 
         btnFiltrarProc.setText("FILTRAR");
+        btnFiltrarProc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarProcActionPerformed(evt);
+            }
+        });
 
         tblProc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -533,6 +564,28 @@ public class ListProcesso extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         jPanelExtra.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btnFiltrarProcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarProcActionPerformed
+        switch (cmbProc.getSelectedIndex()){
+            case 0:
+                listarTodos();
+                break;
+            case 1:
+                listarPorId(Integer.parseInt(txtFiltrarProc.getText()));
+                break;
+            case 2:
+                listarPorCliente(txtFiltrarProc.getText());
+                break;
+            case 3:
+                listarPorAdv(txtFiltrarProc.getText());
+                break;
+            case 4:
+                listarPorNumeroDoProcesso(txtFiltrarProc.getText());
+                break;
+
+        
+    }   
+    }//GEN-LAST:event_btnFiltrarProcActionPerformed
 
     /**
      * @param args the command line arguments

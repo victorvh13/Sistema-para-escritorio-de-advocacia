@@ -42,18 +42,17 @@ public class DaoCliente {
         }
     }
     
-    public Boolean alterar(int id, String nome, String CPF, String telefone, String email, int idEndereco){
+    public Boolean alterar(int id, String nome, String CPF, String telefone, String email){
         try{
-            sql = "UPDATE CLIENTE SET ID = ?, NOME = ?, CPF = ?, TELEFONE = ?, EMAIL = ?, ID_ENDERECO = ? WHERE ID = ?";
+            sql = "UPDATE CLIENTE SET NOME = ?, CPF = ?, TELEFONE = ?, EMAIL = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
-             getStatement().setInt(6, id);
+             getStatement().setInt(5, id);
             getStatement().setString(1, nome);
             getStatement().setString(2, CPF);
             getStatement().setString(3, telefone);
             getStatement().setString(4, email);
-            getStatement().setInt(5, idEndereco);
              
             getStatement().executeUpdate();
             

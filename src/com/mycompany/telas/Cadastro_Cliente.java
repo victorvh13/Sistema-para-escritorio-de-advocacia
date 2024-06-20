@@ -45,6 +45,8 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         
         txtIdCli.setEnabled(false); 
+        
+        txtIdEnd.setVisible(false);
 
     }
 
@@ -56,6 +58,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
             String cpf = ((ModCliente) DadosTemporarios.tempObject).getCpf();
             String telefone = ((ModCliente) DadosTemporarios.tempObject).getTelefone();
             String email = ((ModCliente) DadosTemporarios.tempObject).getEmail();
+            int idEnd = ((ModEndereco) DadosTemporarios.tempObject2).getId();
             int cep = ((ModEndereco) DadosTemporarios.tempObject2).getCep();
             String uf = ((ModEndereco) DadosTemporarios.tempObject2).getEstado();
             String cidade = ((ModEndereco) DadosTemporarios.tempObject2).getCidade();
@@ -75,6 +78,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
             txtCadCliLog.setText(rua);
             txtCadCliN.setText(numero);
             
+            txtIdEnd.setText(String.valueOf(idEnd));
             
             DadosTemporarios.tempObject = null;
             
@@ -119,24 +123,26 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         
             int proximoIdEndereco = daoEndereco.buscarProximoId();
         
-            daoEndereco.inserir(proximoIdEndereco, txtCadCliCep.getText(), txtCadCliUF.getText(), txtCadCliCid.getText(), txtCadCliBar.getText(), txtCadCliLog.getText(), txtCadCliN.getText());
+//            daoEndereco.inserir(proximoIdEndereco, txtCadCliCep.getText(), txtCadCliUF.getText(), txtCadCliCid.getText(), txtCadCliBar.getText(), txtCadCliLog.getText(), txtCadCliN.getText());
         
+            daoEndereco.alterar(Integer.parseInt(txtIdEnd.getText()), txtCadCliCep.getText(), txtCadCliUF.getText(), txtCadCliCid.getText(), txtCadCliBar.getText(), txtCadCliLog.getText(), txtCadCliN.getText());
+
             DaoCliente daoCliente = new DaoCliente();
         
-            if (daoCliente.alterar(daoCliente.buscarProximoId(), txtCadCliNome.getText(), txtCadCliCPF.getText(), txtCadCliTel.getText(), txtCadCliEmail.getText(), proximoIdEndereco)){
-            JOptionPane.showMessageDialog(null, "Dados do Cliente Alterados!");
-            
-            txtIdCli.setText(String.valueOf(daoCliente.buscarProximoId()));
-            txtCadCliNome.setText("");
-            txtCadCliCPF.setText("");
-            txtCadCliTel.setText("");
-            txtCadCliEmail.setText("");
-            txtCadCliCep.setText("");
-            txtCadCliUF.setText("");
-            txtCadCliCid.setText("");
-            txtCadCliBar.setText("");
-            txtCadCliLog.setText("");
-            txtCadCliN.setText("");
+            if (daoCliente.alterar(Integer.parseInt(txtIdCli.getText()), txtCadCliNome.getText(), txtCadCliCPF.getText(), txtCadCliTel.getText(), txtCadCliEmail.getText())){
+                JOptionPane.showMessageDialog(null, "Dados do Cliente Alterados!");
+
+                txtIdCli.setText(String.valueOf(daoCliente.buscarProximoId()));
+                txtCadCliNome.setText("");
+                txtCadCliCPF.setText("");
+                txtCadCliTel.setText("");
+                txtCadCliEmail.setText("");
+                txtCadCliCep.setText("");
+                txtCadCliUF.setText("");
+                txtCadCliCid.setText("");
+                txtCadCliBar.setText("");
+                txtCadCliLog.setText("");
+                txtCadCliN.setText("");
             
             
             }else{
@@ -154,13 +160,23 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         
         int proximoIdEndereco = daoEndereco.buscarProximoId();
         
-        daoEndereco.inserir(proximoIdEndereco, txtCadCliCep.getText(), txtCadCliUF.getText(), txtCadCliCid.getText(), txtCadCliBar.getText(), txtCadCliLog.getText(), txtCadCliN.getText());
+        daoEndereco.alterar(Integer.parseInt(txtIdEnd.getText()), txtCadCliCep.getText(), txtCadCliUF.getText(), txtCadCliCid.getText(), txtCadCliBar.getText(), txtCadCliLog.getText(), txtCadCliN.getText());
         
         DaoCliente daoCliente = new DaoCliente();
         
-        if (daoCliente.alterar(daoCliente.buscarProximoId(), txtCadCliNome.getText(), txtCadCliCPF.getText(), txtCadCliTel.getText(), txtCadCliEmail.getText(), proximoIdEndereco)){
-            JOptionPane.showMessageDialog(null, "Informações de " + txtCadCliNome.getText() + " excluídos com sucesso!");
+        if (daoCliente.excluir(Integer.parseInt(txtIdCli.getText()))){
+            JOptionPane.showMessageDialog(null, "Cliente " + txtCadCliNome.getText() + " excluído com sucesso!");
             
+            txtCadCliNome.setText("");
+            txtCadCliCPF.setText("");
+            txtCadCliTel.setText("");
+            txtCadCliEmail.setText("");
+            txtCadCliCep.setText("");
+            txtCadCliUF.setText("");
+            txtCadCliCid.setText("");
+            txtCadCliBar.setText("");
+            txtCadCliLog.setText("");
+            txtCadCliN.setText("");
             
         }else{
             JOptionPane.showMessageDialog(null, "Não foi possível excluir os dados do Cliente!");
@@ -201,6 +217,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         btnExcluirCli = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtIdCli = new javax.swing.JTextField();
+        txtIdEnd = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -313,9 +330,10 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
                                         .addComponent(txtCadCliTel, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(322, 322, 322))
-                            .addComponent(txtCadCliNome, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(txtCadCliNome, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(33, 33, 33)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,24 +360,29 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(txtIdCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addContainerGap(280, Short.MAX_VALUE))))))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(334, 334, 334)
                 .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtIdEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1))
+                    .addComponent(txtIdEnd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtIdCli)
+                    .addComponent(txtIdCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCadCliNome))
                 .addGap(35, 35, 35)
                 .addComponent(jLabel4)
@@ -515,5 +538,6 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtCadCliTel;
     private javax.swing.JTextField txtCadCliUF;
     private javax.swing.JTextField txtIdCli;
+    private javax.swing.JTextField txtIdEnd;
     // End of variables declaration//GEN-END:variables
 }

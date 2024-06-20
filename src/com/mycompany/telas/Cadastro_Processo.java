@@ -122,6 +122,7 @@ public class Cadastro_Processo extends javax.swing.JFrame {
         if (daoprocesso.alterar(Integer.parseInt(txtId.getText()), Integer.parseInt(txtCadCliente.getText()), Integer.parseInt(txtNomeAdvogado.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), txtCadData.getText(), txtCadStatus.getText(), txtCadReu.getText())){
             JOptionPane.showMessageDialog(null, "Dados do Processo Alterados!");
             
+            txtId.setText(String.valueOf(daoprocesso.buscarProximoId()));
             txtCadCliente.setText("");
             txtNomeAdvogado.setText("");
             txtCadNProc.setText("");
