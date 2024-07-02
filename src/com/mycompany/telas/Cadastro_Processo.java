@@ -49,10 +49,18 @@ public class Cadastro_Processo extends javax.swing.JFrame {
 
     }
     
-        private Boolean existeDadosTemporarios(){        
-        if(DadosTemporarios.tempObject instanceof ModProcesso){
-            int id = ((ModProcesso) DadosTemporarios.tempObject).getId();
+    public Boolean existeDadosTemporarios(){        
+        
+        if(Constantes.novoProcesso){
+            txtIdCli.setText(String.valueOf(((ModCliente) DadosTemporarios.tempObject).getId()));
+            txtCadCliente.setText(((ModCliente) DadosTemporarios.tempObject).getNome());
+            return false;
+        }
             
+        if(DadosTemporarios.tempObject instanceof ModProcesso){
+            
+            int id = ((ModProcesso) DadosTemporarios.tempObject).getId();
+
             String numeroprocesso = ((ModProcesso) DadosTemporarios.tempObject).getNumeroDoProcesso();
             String vara = ((ModProcesso) DadosTemporarios.tempObject).getVara();
             String comarca = ((ModProcesso) DadosTemporarios.tempObject).getComarca();
@@ -60,8 +68,8 @@ public class Cadastro_Processo extends javax.swing.JFrame {
             String status = ((ModProcesso) DadosTemporarios.tempObject).getStatus();
             int cliente = ((ModProcesso) DadosTemporarios.tempObject).getIdCliente();
             String reu = ((ModProcesso) DadosTemporarios.tempObject).getReu();
-            
-            
+
+
             txtId.setText(String.valueOf(id));
             txtCadNProc.setText(numeroprocesso);
             txtCadVara.setText(vara);
@@ -72,24 +80,25 @@ public class Cadastro_Processo extends javax.swing.JFrame {
             txtCadReu.setText(reu);
             txtNomeAdvogado.setText(((ModAdvogados) DadosTemporarios.tempObject2).getNome());
             txtCadCliente.setText(((ModCliente) DadosTemporarios.tempObject3).getNome());
-            
+
             DaoProcesso daoProcesso = new DaoProcesso();
-            
+
             ResultSet resultSet = daoProcesso.listarPorID(id);
-            
+
             try{
                 txtNomeAdvogado.setText(resultSet.getString("advogado"));
             }catch(SQLException e){
-            
+
             }
-            
+
             try{
                 txtCadCliente.setText(resultSet.getString("cliente"));
             }catch(SQLException e){
-            
+
             }
-            
+
             DadosTemporarios.tempObject = null;
+            
             
             return true;
         }else
@@ -197,8 +206,17 @@ public class Cadastro_Processo extends javax.swing.JFrame {
         btnExcluirProc = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         txtNomeAdvogado = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        txtIdCli = new javax.swing.JTextField();
+        txtIdAdv = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("CADASTRO DE PROCESSO");
@@ -279,11 +297,30 @@ public class Cadastro_Processo extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel10.setText("Advogado");
 
+        txtNomeAdvogado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         txtNomeAdvogado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNomeAdvogadoActionPerformed(evt);
             }
         });
+
+        jButton1.setText("...");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("...");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        txtIdCli.setText("idCliente");
+
+        txtIdAdv.setText("idAdv");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -310,12 +347,17 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                             .addComponent(jLabel7)
                             .addComponent(jLabel3)
                             .addComponent(txtCadVara, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtCadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIdCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel5)
                             .addComponent(jLabel9)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 139, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(txtCadNProc, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,9 +371,14 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                         .addGap(67, 67, 67))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNomeAdvogado, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txtNomeAdvogado, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtIdAdv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtCadData, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 470, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,11 +422,17 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCadCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton1)
+                            .addComponent(txtIdCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtNomeAdvogado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtNomeAdvogado, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2)
+                            .addComponent(txtIdAdv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadReturn)
@@ -447,13 +500,49 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                         null, 
                         "Deseja realmente excluir o processo?");
         
-        if(escolha == JOptionPane.YES_OPTION)
+        if(escolha == JOptionPane.YES_OPTION){
             excluir();        
+            
+            ((ListProcesso) Formularios.ListProcesso).listarTodos();
+        }
     }//GEN-LAST:event_btnExcluirProcActionPerformed
 
     private void txtNomeAdvogadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeAdvogadoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeAdvogadoActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if (Formularios.ListCliente == null)
+            Formularios.ListCliente = new ListCliente();
+        
+        Formularios.ListCliente.setVisible(true);
+        Formularios.ListCliente.setExtendedState(JFrame.NORMAL);
+        
+        if(txtCadNProc.getText().equals("")){
+            Constantes.novoProcesso = true;
+        }else{
+            Constantes.novoProcesso = false;
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (Formularios.ListAdvogado == null)
+            Formularios.ListAdvogado = new ListAdvogado();
+        
+        Formularios.ListAdvogado.setVisible(true);
+        Formularios.ListAdvogado.setExtendedState(JFrame.NORMAL);
+        
+        if(txtCadNProc.getText().equals("")){
+            Constantes.novoProcesso = true;
+        }else{
+            Constantes.novoProcesso = false;
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        Formularios.Cadastro_Processo = null;
+        Constantes.novoProcesso = false;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -494,6 +583,8 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     private javax.swing.JButton btnCadProc;
     private javax.swing.JButton btnCadReturn;
     private javax.swing.JButton btnExcluirProc;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -514,6 +605,8 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     private javax.swing.JTextField txtCadStatus;
     private javax.swing.JTextField txtCadVara;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtIdAdv;
+    private javax.swing.JTextField txtIdCli;
     private javax.swing.JTextField txtNomeAdvogado;
     // End of variables declaration//GEN-END:variables
 }

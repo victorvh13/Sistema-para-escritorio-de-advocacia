@@ -11,5 +11,7 @@ package com.mycompany.outros;
 public class Constantes {
     public static String BTN_SALVAR_TEXT = "CADASTRAR";
     public static String BTN_ALTERAR_TEXT = "ALTERAR";
-    public static String BTN_EXCLUIR_TEXT = "EXCLUIR";   
+    public static String BTN_EXCLUIR_TEXT = "EXCLUIR";  
+    
+    public static boolean novoProcesso = false;
 }

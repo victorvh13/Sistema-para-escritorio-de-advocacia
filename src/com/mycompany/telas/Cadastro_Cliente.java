@@ -190,6 +190,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu1 = new java.awt.PopupMenu();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -219,6 +220,8 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         txtIdCli = new javax.swing.JTextField();
         txtIdEnd = new javax.swing.JTextField();
 
+        popupMenu1.setLabel("popupMenu1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -239,10 +242,12 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
         txtCadCliBar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtCadCliCid.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCadCliCid.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         txtCadCliEmail.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         txtCadCliUF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtCadCliUF.setHorizontalAlignment(javax.swing.JTextField.LEFT);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("Logradouro");
@@ -470,7 +475,8 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
                         "Deseja realmente excluir o processo?");
         
         if(escolha == JOptionPane.YES_OPTION){
-            excluir();          // TODO add your handling code here:;
+            excluir();
+            ((ListCliente) Formularios.ListCliente).listarTodos();
         }
     }//GEN-LAST:event_btnExcluirCliActionPerformed
 
@@ -527,6 +533,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private java.awt.PopupMenu popupMenu1;
     private javax.swing.JTextField txtCadCliBar;
     private javax.swing.JTextField txtCadCliCPF;
     private javax.swing.JTextField txtCadCliCep;

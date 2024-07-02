@@ -9,6 +9,7 @@ import com.mycompany.outros.DadosTemporarios;
 import com.mycompany.outros.Formularios;
 import com.mycompany.modelo.ModCliente;
 import com.mycompany.modelo.ModEndereco;
+import com.mycompany.outros.Constantes;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -535,8 +536,19 @@ public class ListCliente extends javax.swing.JFrame {
             
             DadosTemporarios.tempObject2 = modEndereco;
             
-             Formularios.Cadastro_Cliente = new Cadastro_Cliente();
-            Formularios.Cadastro_Cliente.setVisible(true);
+            if(Formularios.Cadastro_Processo != null && !Constantes.novoProcesso){
+                JOptionPane.showMessageDialog(null, "Já existe um formulário de processo aberto. Feche-o para continuar.");
+                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+                return;
+            }
+            
+            if(!Constantes.novoProcesso){
+                Formularios.Cadastro_Cliente = new Cadastro_Cliente();
+                Formularios.Cadastro_Cliente.setVisible(true);
+            }else{
+                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+                ((Cadastro_Processo) Formularios.Cadastro_Processo).existeDadosTemporarios();
+            }
             
             //
         }else if(evt.getButton() == MouseEvent.BUTTON3){

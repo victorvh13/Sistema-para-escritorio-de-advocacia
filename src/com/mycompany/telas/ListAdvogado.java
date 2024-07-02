@@ -5,10 +5,15 @@
 package com.mycompany.telas;
 
 import com.mycompany.dao.DaoAdvogados;
+import com.mycompany.dao.DaoEndereco;
 import com.mycompany.outros.DadosTemporarios;
 import com.mycompany.outros.Formularios;
 import com.mycompany.modelo.ModAdvogados;
+import com.mycompany.modelo.ModEndereco;
+import com.mycompany.outros.Constantes;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -166,7 +171,7 @@ public class ListAdvogado extends javax.swing.JFrame {
         btnFiltrar = new javax.swing.JButton();
         txtListAdvogado = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblListAdvogado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -178,7 +183,15 @@ public class ListAdvogado extends javax.swing.JFrame {
             new String [] {
                 "ID", "Nome", "OAB", "UF"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblListAdvogado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblListAdvogadoMouseClicked(evt);
@@ -213,11 +226,11 @@ public class ListAdvogado extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(cmbListAdvogado, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtListAdvogado)
+                        .addComponent(txtListAdvogado, javax.swing.GroupLayout.DEFAULT_SIZE, 461, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnFiltrar)))
                 .addContainerGap())
@@ -231,8 +244,7 @@ public class ListAdvogado extends javax.swing.JFrame {
                     .addComponent(txtListAdvogado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFiltrar))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 628, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -298,7 +310,45 @@ public class ListAdvogado extends javax.swing.JFrame {
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
-        }        // TODO add your handling code here:
+        }        
+        
+//            DadosTemporarios.tempObject = modAdvogados;
+//           
+//           
+//         
+//            ModAdvogados modAdvogados = new ModAdvogados();
+//            
+//            DaoAdvogados daoAdvogados = new DaoAdvogados();
+//            
+//            ResultSet resultSetadvogados = daoAdvogados.listarPorId();
+//            
+//            try{
+//                if(resultSetadvogados.next()){
+//                    modAdvogados.setId(resultSetadvogados.getInt("ID"));
+//                    modAdvogados.setNome(resultSetadvogados.getString("NOME"));
+//                    modAdvogados.setNome(resultSetadvogados.getString("OAB"));
+//                    modAdvogados.setUf(resultSetadvogados.getString("UF"));
+//
+//                }
+//            }catch(SQLException e){
+//                e.printStackTrace();
+//            }
+//            
+//            DadosTemporarios.tempObject2 = modAdvogados;
+//            
+//            if(Formularios.Cadastro_Processo != null && !Constantes.novoProcesso){
+//                JOptionPane.showMessageDialog(null, "Já existe um formulário de processo aberto. Feche-o para continuar.");
+//                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+//                return;
+//            }
+//            
+//            if(!Constantes.novoProcesso){
+//                Formularios.Cadastro_Advogado = new Cadastro_Cliente();
+//                Formularios.Cadastro_Advogado.setVisible(true);
+//            }else{
+//                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+//                ((Cadastro_Processo) Formularios.Cadastro_Processo).existeDadosTemporarios();
+//            }
     }//GEN-LAST:event_tblListAdvogadoMouseClicked
 
     private void cmbListAdvogadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbListAdvogadoActionPerformed

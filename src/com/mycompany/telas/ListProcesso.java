@@ -18,6 +18,7 @@ import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,30 +42,28 @@ public class ListProcesso extends javax.swing.JFrame {
     }
 
         public void listarTodos(){
-        try{
-            DefaultTableModel defaultTableModel = (DefaultTableModel) tblProc.getModel();
-            
-            tblProc.setModel(defaultTableModel);
+            try{
+                DefaultTableModel defaultTableModel = (DefaultTableModel) tblProc.getModel();
 
-            DaoProcesso daoProcesso = new DaoProcesso();
+                tblProc.setModel(defaultTableModel);
 
-            ResultSet resultSet = daoProcesso.listarTodos();
-            
-            defaultTableModel.setRowCount(0);
-            while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String cliente = resultSet.getString(2);
-                String advogado = resultSet.getString(3);
-                String numeroprocesso = resultSet.getString(4);
-                String dadosprocesso = resultSet.getString(5);
+                DaoProcesso daoProcesso = new DaoProcesso();
 
-                
-                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso,dadosprocesso});
+                ResultSet resultSet = daoProcesso.listarTodos();
+
+                defaultTableModel.setRowCount(0);
+                while (resultSet.next()){
+                    String id = resultSet.getString("p.id");
+                    String cliente = resultSet.getString("c.nome");
+                    String advogado = resultSet.getString("a.nome");
+                    String numeroprocesso = resultSet.getString("p.Numero_do_processo");
+
+                    defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso});
+                }
+            }catch(Exception e){
+                System.out.println(e.getMessage());
             }
-        }catch(Exception e){
-            System.out.println(e.getMessage());
         }
-    }
     public void listarPorId(int pId){
         try{
          
@@ -220,17 +219,17 @@ public class ListProcesso extends javax.swing.JFrame {
 
         tblProc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id", "Cliente", "Advogado", "Número do processo", "Dados do processo"
+                "Id", "Cliente", "Advogado", "Número do processo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -250,7 +249,6 @@ public class ListProcesso extends javax.swing.JFrame {
             tblProc.getColumnModel().getColumn(1).setPreferredWidth(200);
             tblProc.getColumnModel().getColumn(2).setPreferredWidth(1);
             tblProc.getColumnModel().getColumn(3).setPreferredWidth(150);
-            tblProc.getColumnModel().getColumn(4).setPreferredWidth(1);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -493,6 +491,11 @@ public class ListProcesso extends javax.swing.JFrame {
             DadosTemporarios.tempObject2 = modAdvogados;
             DadosTemporarios.tempObject3 = modCliente;
             
+            if(Formularios.Cadastro_Processo != null){
+                JOptionPane.showMessageDialog(null, "Já existe um formulário de processo aberto. Feche-o para continuar.");
+                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+                return;
+            }
             
             Formularios.Cadastro_Processo = new Cadastro_Processo();
             Formularios.Cadastro_Processo.setVisible(true);

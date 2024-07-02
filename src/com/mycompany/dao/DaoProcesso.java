@@ -89,8 +89,9 @@ public class DaoProcesso {
     
     public ResultSet listarTodos(){
             try {
-                sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO";
-                
+//                sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO";
+             sql = "SELECT * FROM PROCESSO p join cliente c on c.id = p.id_cliente join advogados a on a.id = p.id_Advogados";
+
             setStatement(getConexao().prepareStatement(sql));
                 
             setResultado(getStatement().executeQuery());

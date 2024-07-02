@@ -5,6 +5,7 @@
 package com.mycompany.telas;
 
 import com.mycompany.outros.BancoDeDadosMySql;
+import com.mycompany.outros.Constantes;
 import javax.swing.JFrame;
 import com.mycompany.outros.Formularios;
 /**
@@ -220,7 +221,7 @@ public class Menu extends javax.swing.JFrame {
             Formularios.ListProcesso = new ListProcesso();
         
         Formularios.ListProcesso.setVisible(true);
-        Formularios.ListProcesso.setExtendedState(JFrame.NORMAL); 
+        Formularios.ListProcesso.setExtendedState(JFrame.NORMAL);
     }//GEN-LAST:event_btnListProcActionPerformed
 
     /**
