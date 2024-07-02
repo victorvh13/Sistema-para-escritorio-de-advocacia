@@ -305,8 +305,14 @@ public class ListAdvogado extends javax.swing.JFrame {
                 
                 DadosTemporarios.tempObject = (ModAdvogados) modAdvogados;
 
-                Cadastro_Advogado cadastro_Advogado = new Cadastro_Advogado();
-                cadastro_Advogado.setVisible(true);
+                if(!Constantes.novoProcesso && Formularios.Cadastro_Processo == null){
+                    Cadastro_Advogado cadastro_Advogado = new Cadastro_Advogado();
+                    cadastro_Advogado.setVisible(true);
+                }else{
+                    ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+                    ((Cadastro_Processo) Formularios.Cadastro_Processo).existeDadosTemporarios();
+                }
+                
             }
         }catch(Exception e){
             System.out.println(e.getMessage());

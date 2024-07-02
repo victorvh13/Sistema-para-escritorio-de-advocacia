@@ -523,7 +523,7 @@ public class ListCliente extends javax.swing.JFrame {
             try{
                 if(resultSetendereco.next()){
                     modEndereco.setId(resultSetendereco.getInt("ID"));
-                    modEndereco.setCep(resultSetendereco.getInt("CEP"));
+                    modEndereco.setCep(resultSetendereco.getString("CEP"));
                     modEndereco.setCidade(resultSetendereco.getString("CIDADE"));
                     modEndereco.setEstado(resultSetendereco.getString("ESTADO"));
                     modEndereco.setNumero(resultSetendereco.getString("NUMERO"));
@@ -536,13 +536,13 @@ public class ListCliente extends javax.swing.JFrame {
             
             DadosTemporarios.tempObject2 = modEndereco;
             
-            if(Formularios.Cadastro_Processo != null && !Constantes.novoProcesso){
-                JOptionPane.showMessageDialog(null, "Já existe um formulário de processo aberto. Feche-o para continuar.");
-                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
-                return;
-            }
+//            if(Formularios.Cadastro_Processo != null && !Constantes.novoProcesso){
+//                JOptionPane.showMessageDialog(null, "Já existe um formulário de processo aberto. Feche-o para continuar.");
+//                ((Cadastro_Processo) Formularios.Cadastro_Processo).setVisible(true);
+//                return;
+//            }
             
-            if(!Constantes.novoProcesso){
+            if(!Constantes.novoProcesso && Formularios.Cadastro_Processo == null){
                 Formularios.Cadastro_Cliente = new Cadastro_Cliente();
                 Formularios.Cadastro_Cliente.setVisible(true);
             }else{

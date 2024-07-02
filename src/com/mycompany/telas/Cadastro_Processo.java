@@ -51,10 +51,16 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     
     public Boolean existeDadosTemporarios(){        
         
-        if(Constantes.novoProcesso){
+        if((DadosTemporarios.tempObject instanceof ModAdvogados)){
+            txtIdAdv.setText(String.valueOf(((ModAdvogados) DadosTemporarios.tempObject).getId()));
+            txtNomeAdvogado.setText(((ModAdvogados) DadosTemporarios.tempObject).getNome());
+//            return false;
+        }
+        
+        if((DadosTemporarios.tempObject instanceof ModCliente)){
             txtIdCli.setText(String.valueOf(((ModCliente) DadosTemporarios.tempObject).getId()));
             txtCadCliente.setText(((ModCliente) DadosTemporarios.tempObject).getNome());
-            return false;
+//            return false;
         }
             
         if(DadosTemporarios.tempObject instanceof ModProcesso){
@@ -108,7 +114,7 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     private void inserir(){
         DaoProcesso daoProcesso = new DaoProcesso();
         
-        if (daoProcesso.inserir(Integer.parseInt(txtId.getText()), Integer.parseInt(txtCadCliente.getText()), Integer.parseInt(txtNomeAdvogado.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), txtCadData.getText(), txtCadStatus.getText(), txtCadReu.getText())){
+        if (daoProcesso.inserir(Integer.parseInt(txtId.getText()), Integer.parseInt(txtIdCli.getText()), Integer.parseInt(txtIdAdv.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), txtCadData.getText(), txtCadStatus.getText(), txtCadReu.getText())){
             JOptionPane.showMessageDialog(null, "Processo salvo com sucesso");
             
             txtId.setText(String.valueOf(daoProcesso.buscarProximoId()));
@@ -128,7 +134,7 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     private void alterar(){
         DaoProcesso daoprocesso = new DaoProcesso();
         
-        if (daoprocesso.alterar(Integer.parseInt(txtId.getText()), Integer.parseInt(txtCadCliente.getText()), Integer.parseInt(txtNomeAdvogado.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), txtCadData.getText(), txtCadStatus.getText(), txtCadReu.getText())){
+        if (daoprocesso.alterar(Integer.parseInt(txtId.getText()), Integer.parseInt(txtIdCli.getText()), Integer.parseInt(txtIdAdv.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), txtCadData.getText(), txtCadStatus.getText(), txtCadReu.getText())){
             JOptionPane.showMessageDialog(null, "Dados do Processo Alterados!");
             
             txtId.setText(String.valueOf(daoprocesso.buscarProximoId()));

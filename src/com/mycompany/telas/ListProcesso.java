@@ -10,6 +10,7 @@ import com.mycompany.dao.DaoProcesso;
 import com.mycompany.modelo.ModAdvogados;
 import com.mycompany.modelo.ModCliente;
 import com.mycompany.modelo.ModProcesso;
+import com.mycompany.outros.Constantes;
 import com.mycompany.outros.DadosTemporarios;
 import com.mycompany.outros.Formularios;
 import java.awt.event.ActionEvent;

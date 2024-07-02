@@ -47,19 +47,19 @@ public class DaoProcesso {
     
     public Boolean alterar(int id, int idCliente, int idAdvogados, String NumeroDoProcesso, String Vara, String Comarca, String DataProtocolo, String Status, String Reu){
         try{
-            sql = "UPDATE PROCESSO SET ID = ?, ID_CLIENTE = ?, ID_ADVOGADOS = ?, NUMERO_DO_PROCESSO = ?, VARA = ?, COMARCA = ?, DATA_PROTOCOLO = ?, STATUS = ?, REU = ? WHERE ID = ?";
+            sql = "UPDATE PROCESSO SET ID_CLIENTE = ?, ID_ADVOGADOS = ?, NUMERO_DO_PROCESSO = ?, VARA = ?, COMARCA = ?, DATA_PROTOCOLO = ?, STATUS = ?, REU = ? WHERE ID = ?";
             
             setStatement(getConexao().prepareStatement(sql));
             
-            getStatement().setInt(1, id);
-            getStatement().setInt(2, idCliente);
-            getStatement().setInt(3, idAdvogados);
-            getStatement().setString(4, NumeroDoProcesso);
-            getStatement().setString(5, Vara);
-            getStatement().setString(6, Comarca);
-            getStatement().setString(7, DataProtocolo);
-            getStatement().setString(8, Status);
-            getStatement().setString(9, Reu);
+            getStatement().setInt(9, id);
+            getStatement().setInt(1, idCliente);
+            getStatement().setInt(2, idAdvogados);
+            getStatement().setString(3, NumeroDoProcesso);
+            getStatement().setString(4, Vara);
+            getStatement().setString(5, Comarca);
+            getStatement().setString(6, DataProtocolo);
+            getStatement().setString(7, Status);
+            getStatement().setString(8, Reu);
              
             getStatement().executeUpdate();
             

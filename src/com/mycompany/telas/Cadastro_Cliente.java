@@ -59,7 +59,7 @@ public class Cadastro_Cliente extends javax.swing.JFrame {
             String telefone = ((ModCliente) DadosTemporarios.tempObject).getTelefone();
             String email = ((ModCliente) DadosTemporarios.tempObject).getEmail();
             int idEnd = ((ModEndereco) DadosTemporarios.tempObject2).getId();
-            int cep = ((ModEndereco) DadosTemporarios.tempObject2).getCep();
+            String cep = ((ModEndereco) DadosTemporarios.tempObject2).getCep();
             String uf = ((ModEndereco) DadosTemporarios.tempObject2).getEstado();
             String cidade = ((ModEndereco) DadosTemporarios.tempObject2).getCidade();
             String bairro = ((ModEndereco) DadosTemporarios.tempObject2).getBairro();

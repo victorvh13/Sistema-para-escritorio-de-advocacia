@@ -366,7 +366,7 @@ public class ListEndereço extends javax.swing.JFrame {
                 modEndereco.setBairro(String.valueOf(tblListEnd.getValueAt(tblListEnd.getSelectedRow(), 3)));
                 modEndereco.setCidade(String.valueOf(tblListEnd.getValueAt(tblListEnd.getSelectedRow(), 4)));
                 modEndereco.setEstado(String.valueOf(tblListEnd.getValueAt(tblListEnd.getSelectedRow(), 5)));
-                modEndereco.setCep(Integer.parseInt(String.valueOf(tblListEnd.getValueAt(tblListEnd.getSelectedRow(), 6))));
+                modEndereco.setCep(String.valueOf(tblListEnd.getValueAt(tblListEnd.getSelectedRow(), 6)));
                 
                 
                 DadosTemporarios.tempObject = (ModEndereco) modEndereco;
