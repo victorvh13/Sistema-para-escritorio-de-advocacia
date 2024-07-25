@@ -135,10 +135,10 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
                     <StringItem index="0" value="TODOS"/>
-                    <StringItem index="1" value="Cliente"/>
-                    <StringItem index="2" value="Advogado"/>
-                    <StringItem index="3" value="N&#xfa;mero do processo"/>
-                    <StringItem index="4" value="Dados do processo"/>
+                    <StringItem index="1" value="ID"/>
+                    <StringItem index="2" value="Cliente"/>
+                    <StringItem index="3" value="Advogado"/>
+                    <StringItem index="4" value="N&#xfa;mero do processo"/>
                   </StringArray>
                 </Property>
               </Properties>

@@ -13,8 +13,11 @@ import com.mycompany.outros.DadosTemporarios;
 import com.mycompany.outros.Formularios;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.text.DateFormatter;
 
 /**
  *
@@ -46,7 +49,8 @@ public class Cadastro_Processo extends javax.swing.JFrame {
         
         txtId.setEnabled(false); 
  
-
+        txtIdCli.setVisible(false);
+        txtIdAdv.setVisible(false);
     }
     
     public Boolean existeDadosTemporarios(){        
@@ -112,9 +116,21 @@ public class Cadastro_Processo extends javax.swing.JFrame {
     }
         
     private void inserir(){
+        //
         DaoProcesso daoProcesso = new DaoProcesso();
         
-        if (daoProcesso.inserir(Integer.parseInt(txtId.getText()), Integer.parseInt(txtIdCli.getText()), Integer.parseInt(txtIdAdv.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), txtCadData.getText(), txtCadStatus.getText(), txtCadReu.getText())){
+        String dataFormatar = txtCadData.getText();
+        
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        LocalDate data = LocalDate.parse((dataFormatar), inputFormatter);
+        
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        String dataFormatada = data.format(outputFormatter);
+        //
+                
+        if (daoProcesso.inserir(Integer.parseInt(txtId.getText()), Integer.parseInt(txtIdCli.getText()), Integer.parseInt(txtIdAdv.getText()), txtCadNProc.getText(), txtCadVara.getText(), txtCadCom.getText(), dataFormatada, txtCadStatus.getText(), txtCadReu.getText())){
             JOptionPane.showMessageDialog(null, "Processo salvo com sucesso");
             
             txtId.setText(String.valueOf(daoProcesso.buscarProximoId()));
@@ -175,14 +191,6 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                 
         dispose();
     }
-    
- 
-    
-    
-    
-    
-    
-    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -336,15 +344,13 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                 .addGap(326, 326, 326)
                 .addComponent(jLabel1)
                 .addGap(252, 322, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCadProc)
-                .addGap(361, 361, 361))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnExcluirProc)
+                        .addGap(206, 206, 206)
+                        .addComponent(btnCadProc)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCadReturn)
                         .addGap(56, 56, 56))
@@ -407,7 +413,7 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                     .addComponent(txtCadVara, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtCadCom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel5))
@@ -417,12 +423,10 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtCadStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addComponent(jLabel8)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtCadReu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                        .addComponent(btnCadProc)
                         .addGap(23, 23, 23))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(22, 22, 22)
@@ -442,7 +446,8 @@ public class Cadastro_Processo extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadReturn)
-                    .addComponent(btnExcluirProc))
+                    .addComponent(btnExcluirProc)
+                    .addComponent(btnCadProc))
                 .addGap(24, 24, 24))
         );
 

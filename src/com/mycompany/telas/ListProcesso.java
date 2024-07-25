@@ -18,6 +18,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -100,17 +102,17 @@ public class ListProcesso extends javax.swing.JFrame {
 
             DaoProcesso daoProcesso = new DaoProcesso();
 
-            ResultSet resultSet = daoProcesso.listarPorIdCliente(Integer.parseInt(txtFiltrarProc.getText()));
+            ResultSet resultSet = daoProcesso.listarPorNomeCliente(txtFiltrarProc.getText());
             
             defaultTableModel.setRowCount(0);
             while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String cliente = resultSet.getString(2);
-                String advogado = resultSet.getString(3);
-                String numeroprocesso = resultSet.getString(4);
-                String dadosprocesso = resultSet.getString(5);
+                String id = resultSet.getString("p.id");
+                String cliente = resultSet.getString("c.nome");
+                String advogado = resultSet.getString("a.nome");
+                String numeroprocesso = resultSet.getString("p.Numero_do_Processo");
+//                String dadosprocesso = resultSet.getString(5);
                 
-                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso,dadosprocesso});
+                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso});
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -125,18 +127,18 @@ public class ListProcesso extends javax.swing.JFrame {
 
             DaoProcesso daoProcesso = new DaoProcesso();
 
-            ResultSet resultSet = daoProcesso.listarPorIdAdvogados(Integer.parseInt(txtFiltrarProc.getText()));
+            ResultSet resultSet = daoProcesso.listarPorNomeAdvogado(txtFiltrarProc.getText());
             
             defaultTableModel.setRowCount(0);
             while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String cliente = resultSet.getString(2);
-                String advogado = resultSet.getString(3);
-                String numeroprocesso = resultSet.getString(4);
-                String dadosprocesso = resultSet.getString(5);
+                String id = resultSet.getString("p.id");
+                String cliente = resultSet.getString("c.nome");
+                String advogado = resultSet.getString("a.nome");
+                String numeroprocesso = resultSet.getString("p.Numero_do_Processo");
+//                String dadosprocesso = resultSet.getString(5);
 
                 
-                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso,dadosprocesso});
+                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso});
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -155,14 +157,14 @@ public class ListProcesso extends javax.swing.JFrame {
             
             defaultTableModel.setRowCount(0);
             while (resultSet.next()){
-                String id = resultSet.getString(1);
-                String cliente = resultSet.getString(2);
-                String advogado = resultSet.getString(3);
-                String numeroprocesso = resultSet.getString(4);
-                String dadosprocesso = resultSet.getString(5);
+                String id = resultSet.getString("p.id");
+                String cliente = resultSet.getString("c.nome");
+                String advogado = resultSet.getString("a.nome");
+                String numeroprocesso = resultSet.getString("p.Numero_do_Processo");
+//                String dadosprocesso = resultSet.getString(5);
 
                 
-                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso,dadosprocesso});
+                defaultTableModel.addRow(new Object[]{id, cliente,advogado, numeroprocesso});
             }
         }catch(Exception e){
             System.out.println(e.getMessage());
@@ -198,7 +200,7 @@ public class ListProcesso extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        cmbProc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "Cliente", "Advogado", "Número do processo", "Dados do processo" }));
+        cmbProc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TODOS", "ID", "Cliente", "Advogado", "Número do processo" }));
         cmbProc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbProcActionPerformed(evt);
@@ -546,7 +548,22 @@ public class ListProcesso extends javax.swing.JFrame {
                             comarca.setText(rs.getString("Comarca"));
                             status.setText(rs.getString("Status"));
                             reu.setText(rs.getString("Reu"));
-                            dataprotocolo.setText(rs.getString("Data_Protocolo"));
+                            
+                            //
+                            DaoProcesso daoProcesso = new DaoProcesso();
+
+                            String dataFormatar = rs.getString("Data_Protocolo");
+
+                            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                            LocalDate data = LocalDate.parse((dataFormatar), inputFormatter);
+
+                            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+                            String dataFormatada = data.format(outputFormatter);
+                            //
+                            
+                            dataprotocolo.setText(dataFormatada);
                             
                         }
                     } catch (SQLException ex) {

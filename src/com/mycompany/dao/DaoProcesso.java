@@ -155,6 +155,38 @@ public class DaoProcesso {
          return getResultado();
     }
     
+    public ResultSet listarPorNomeCliente(String nomeCliente){
+         try{
+             sql = "SELECT * FROM PROCESSO P join CLIENTE C on C.id = P.id_cliente join advogados a on a.id = p.id_Advogados where c.Nome like ?";
+
+             setStatement(getConexao().prepareStatement(sql));
+
+             getStatement().setString(1, nomeCliente + "%");
+
+             setResultado(getStatement().executeQuery());
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+         }
+
+         return getResultado();
+    }
+    
+    public ResultSet listarPorNomeAdvogado(String nomeAdvogado){
+         try{
+             sql = "SELECT * FROM PROCESSO P join CLIENTE C on C.id = P.id_cliente join advogados a on a.id = p.id_Advogados where a.Nome like ?";
+
+             setStatement(getConexao().prepareStatement(sql));
+
+             getStatement().setString(1, nomeAdvogado + "%");
+
+             setResultado(getStatement().executeQuery());
+         }catch(SQLException e){
+             System.out.println(e.getMessage());
+         }
+
+         return getResultado();
+    }
+    
     public ResultSet listarPorIdAdvogados(int idAdvogados){
          try{
              sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE ID_ADVOGADOS = ?";
@@ -173,7 +205,7 @@ public class DaoProcesso {
     
     public ResultSet listarPorNumeroDoProcesso(String NumeroDoProcesso){
          try{
-             sql = "SELECT ID, ID_CLIENTE, ID_ADVOGADOS, NUMERO_DO_PROCESSO, VARA, COMARCA, DATA_PROTOCOLO, STATUS, REU FROM PROCESSO WHERE NUMERO_DO_PROCESSO LIKE ?";
+             sql = "SELECT * FROM PROCESSO P join CLIENTE C on C.id = P.id_cliente join advogados a on a.id = p.id_Advogados WHERE p.NUMERO_DO_PROCESSO LIKE ?";
 
              setStatement(getConexao().prepareStatement(sql));
 
